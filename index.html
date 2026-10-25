@@ -5,12 +5,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050b14">
-<meta name="description" content="HS Streame — transmissão ao vivo">
-<title>HS Streame | Ao Vivo</title>
+
+<meta name="description" content="HS Streame — plataforma de transmissões ao vivo criada por Henrique Soares.">
+
+<title>HS Streame | Transmissões ao Vivo</title>
 
 <style>
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -22,36 +26,46 @@
   --border: rgba(255,255,255,.09);
 }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: radial-gradient(ellipse at 50% 0%, #102c4d, transparent 48%), var(--bg);
-  color: var(--text);
-  min-height: 100vh;
+html {
+  scroll-behavior: smooth;
 }
 
-header {
-  border-bottom: 1px solid var(--border);
-  background: #050b14;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background:
+    radial-gradient(ellipse at 50% 0%, #102c4d, transparent 48%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 .container {
-  width: min(1120px, 92%);
-  margin: auto;
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+/* CABEÇALHO */
+
+header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(5,11,20,.94);
 }
 
 .nav {
-  min-height: 76px;
+  min-height: 78px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 20px;
 }
 
 .brand {
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 900;
-  letter-spacing: 1.4px;
+  letter-spacing: 1px;
+  color: white;
+  text-decoration: none;
 }
 
 .brand span {
@@ -61,11 +75,11 @@ header {
 .live-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #aab4c3;
+  color: var(--muted);
 }
 
 .dot {
@@ -75,12 +89,14 @@ header {
   background: #888;
 }
 
+/* CONTEÚDO PRINCIPAL */
+
 main {
-  padding: 42px 0 60px;
+  padding: 48px 0 65px;
 }
 
 .intro {
-  margin-bottom: 22px;
+  margin-bottom: 25px;
 }
 
 .eyebrow {
@@ -92,18 +108,18 @@ main {
 }
 
 h1 {
-  font-size: clamp(30px, 5vw, 48px);
-  line-height: 1.1;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -1.4px;
   margin: 10px 0;
-  letter-spacing: -1.3px;
 }
 
 .intro p {
   color: var(--muted);
-  line-height: 1.7;
-  margin: 0;
   font-size: 14px;
 }
+
+/* PLAYER */
 
 .player-card {
   background: var(--panel);
@@ -137,7 +153,8 @@ h1 {
   border: 0;
 }
 
-/* Barras de cor quando não houver sinal */
+/* BARRAS COLORIDAS */
+
 .no-signal {
   position: absolute;
   inset: 0;
@@ -200,70 +217,171 @@ h1 {
   right: 0;
   bottom: 10%;
   padding: 10px;
-  color: #fff;
+  color: white;
   text-shadow: 0 2px 8px #000;
   font-weight: 900;
   letter-spacing: 3px;
   font-size: clamp(12px, 2vw, 20px);
 }
 
+/* INFORMAÇÕES DO PLAYER */
+
 .player-info {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 13px 7px 5px;
   gap: 10px;
+  padding: 13px 7px 5px;
 }
 
 .player-info h2 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 750;
 }
 
 .player-info p {
   color: var(--muted);
   font-size: 12px;
-  margin: 5px 0 0;
+  margin-top: 3px;
 }
+
+/* CARDS */
 
 .cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 22px;
 }
 
 .info-card {
-  padding: 20px;
+  padding: 22px;
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 13px;
+  border-radius: 14px;
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(22,139,255,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 19px;
 }
 
 .info-card h3 {
-  font-size: 14px;
-  margin: 0 0 9px;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 .info-card p {
-  font-size: 13px;
   color: var(--muted);
-  line-height: 1.7;
-  margin: 0;
+  font-size: 13px;
+  line-height: 1.8;
 }
+
+/* SOBRE O CRIADOR */
+
+.about {
+  margin-top: 45px;
+  padding: 30px;
+  background: linear-gradient(135deg, #0d2036, #0a1422);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.section-label {
+  color: #58aaff;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.about h2 {
+  font-size: clamp(23px, 4vw, 31px);
+  margin-bottom: 13px;
+  line-height: 1.25;
+}
+
+.about > p {
+  color: #b6c4d5;
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 760px;
+}
+
+.creator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid var(--border);
+  margin-top: 25px;
+  padding-top: 22px;
+}
+
+.creator-avatar {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #168bff, #0753a8);
+  color: white;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.creator h3 {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.creator p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* RODAPÉ */
 
 footer {
   border-top: 1px solid var(--border);
-  padding: 23px 0;
+  padding: 25px 0;
   color: #8091a7;
   font-size: 12px;
   text-align: center;
 }
 
+.footer-brand {
+  font-weight: 800;
+  color: #dce8f5;
+  margin-bottom: 4px;
+}
+
+.footer-brand span {
+  color: var(--blue);
+}
+
+/* RESPONSIVO */
+
 @media (max-width: 600px) {
+  .nav {
+    min-height: 68px;
+  }
+
+  .brand {
+    font-size: 21px;
+  }
+
   main {
-    padding-top: 30px;
+    padding-top: 32px;
   }
 
   .cards {
@@ -277,14 +395,20 @@ footer {
   .player-info {
     padding: 12px 5px 5px;
   }
+
+  .about {
+    padding: 22px;
+    margin-top: 30px;
+  }
 }
 </style>
 </head>
 
 <body>
+
 <header>
   <div class="container nav">
-    <div class="brand">HS <span>Streame</span></div>
+    <a class="brand" href="#">HS <span>Streame</span></a>
 
     <div class="live-label">
       <span class="dot" id="liveDot"></span>
@@ -294,10 +418,11 @@ footer {
 </header>
 
 <main class="container">
+
   <section class="intro">
     <div class="eyebrow">Sua conexão com o ao vivo</div>
-    <h1>Estamos no ar.</h1>
-    <p>Acompanhe nossa transmissão diretamente pela HS Streame.</p>
+    <h1>Transmissões que conectam.</h1>
+    <p>Acompanhe nossa programação diretamente pela HS Streame.</p>
   </section>
 
   <section class="player-card">
@@ -319,7 +444,7 @@ footer {
           <span></span><span></span><span></span>
         </div>
 
-        <div class="signal-caption">HS Streame · SEM SINAL</div>
+        <div class="signal-caption">HS STREAME · SEM SINAL</div>
       </div>
 
       <div id="youtubePlayer"></div>
@@ -328,34 +453,68 @@ footer {
     <div class="player-info">
       <div>
         <h2>HS Streame</h2>
-        <p id="streamStatus">Carregando o player da transmissão...</p>
+        <p id="streamStatus">Carregando a transmissão...</p>
       </div>
     </div>
   </section>
 
   <section class="cards">
+
     <article class="info-card">
-      <h3>📡 Transmissão</h3>
+      <div class="card-icon">📡</div>
+      <h3>Transmissões ao vivo</h3>
       <p>
-        Acompanhe nossa programação e transmissões pela internet.
+        Um espaço dedicado à exibição de conteúdo ao vivo pela internet,
+        aproximando eventos e espectadores por meio da tecnologia.
       </p>
     </article>
 
     <article class="info-card">
-      <h3>🎬 HS Streame</h3>
+      <div class="card-icon">🎥</div>
+      <h3>Tecnologia audiovisual</h3>
       <p>
-        Tecnologia, imagem e transmissão ao vivo em um só lugar.
+        Imagem, vídeo e transmissão unidos para criar uma experiência
+        de visualização simples e acessível.
       </p>
     </article>
+
   </section>
+
+  <section class="about">
+    <div class="section-label">Conheça o projeto</div>
+
+    <h2>Sobre a HS Streame</h2>
+
+    <p>
+      A HS Streame é uma plataforma idealizada para levar transmissões
+      ao vivo ao público por meio da internet. O projeto une o interesse
+      pelo audiovisual e pela tecnologia, buscando oferecer uma
+      experiência de transmissão organizada, moderna e acessível.
+    </p>
+
+    <div class="creator">
+      <div class="creator-avatar">HS</div>
+
+      <div>
+        <h3>Henrique Soares</h3>
+        <p>Criador e desenvolvedor da HS Streame</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
-  © <span id="year"></span> HS Streame. Todos os direitos reservados.
+  <div class="container">
+    <div class="footer-brand">HS <span>Streame</span></div>
+    <p>Uma plataforma criada por Henrique Soares.</p>
+    <p>© <span id="year"></span> HS Streame. Todos os direitos reservados.</p>
+  </div>
 </footer>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
 const LIVE_ID = "SkTjD8g0bAI";
 
@@ -373,6 +532,7 @@ function setStatus(label, message, color) {
 
 function showNoSignal(message) {
   overlay.classList.remove("hidden");
+
   setStatus(
     "SEM SINAL",
     message || "A transmissão não está disponível.",
@@ -382,15 +542,17 @@ function showNoSignal(message) {
 
 function hideNoSignal() {
   overlay.classList.add("hidden");
+
   setStatus(
     "AO VIVO",
     "Reprodução da transmissão.",
     "#ff4141"
   );
+
   dot.style.boxShadow = "0 0 12px #ff4141";
 }
 
-/* Mantém as barras escondidas enquanto o player carrega. */
+/* O vídeo fica visível enquanto o player carrega. */
 overlay.classList.add("hidden");
 
 setStatus(
@@ -461,6 +623,6 @@ const api = document.createElement("script");
 api.src = "https://www.youtube.com/iframe_api";
 document.head.appendChild(api);
 </script>
+
 </body>
 </html>
-
