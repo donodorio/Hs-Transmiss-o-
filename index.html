@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -380,17 +380,6 @@ function showNoSignal(message) {
     "SEM SINAL",
     message || "A transmissão terminou ou não está disponível.",
     "#888"
-  );
-}
-
-function hideNoSignal() {
-  overlay.classList.add("hidden");
-  setStatus(
-    "AO VIVO",
-    "Reprodução da transmissão.",
-    "#ff4141"
-  );
-  dot.style.boxShadow = "0 0 12px #ff4141";
 }
 
 /* O player fica visível durante o carregamento. */
@@ -452,4 +441,4 @@ document.head.appendChild(api);
 </script>
 </body>
 </html>
-```
+
