@@ -1,276 +1,282 @@
-
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#050b14">
-<meta name="description" content="HS Network — transmissão pela internet.">
+<meta name="description" content="HS Network — transmissão ao vivo">
 <title>HS Network | Ao Vivo</title>
 
 <style>
-*{box-sizing:border-box}
-
-:root{
-  --bg:#050b14;
-  --panel:#0c1727;
-  --blue:#168bff;
-  --text:#f4f7fb;
-  --muted:#9aabc0;
-  --border:rgba(255,255,255,.09)
+* {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  background:radial-gradient(ellipse at 50% 0%,#102c4d,transparent 48%),var(--bg);
-  color:var(--text);
-  min-height:100vh
+:root {
+  --bg: #050b14;
+  --panel: #0c1727;
+  --blue: #168bff;
+  --text: #f4f7fb;
+  --muted: #9aabc0;
+  --border: rgba(255,255,255,.09);
 }
 
-header{
-  border-bottom:1px solid var(--border);
-  background:#050b14
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: radial-gradient(ellipse at 50% 0%, #102c4d, transparent 48%), var(--bg);
+  color: var(--text);
+  min-height: 100vh;
 }
 
-.container{
-  width:min(1120px,92%);
-  margin:auto
+header {
+  border-bottom: 1px solid var(--border);
+  background: #050b14;
 }
 
-.nav{
-  min-height:78px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px
+.container {
+  width: min(1120px, 92%);
+  margin: auto;
 }
 
-.brand{
-  font-size:23px;
-  font-weight:900;
-  letter-spacing:1.4px
+.nav {
+  min-height: 76px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
-.brand span{color:var(--blue)}
-
-.live-label{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:1px;
-  color:#aab4c3
+.brand {
+  font-size: 23px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
 }
 
-.dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#888
+.brand span {
+  color: var(--blue);
 }
 
-main{padding:48px 0 64px}
-
-.intro{margin-bottom:25px}
-
-.eyebrow{
-  color:#58aaff;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:2px;
-  text-transform:uppercase
+.live-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #aab4c3;
 }
 
-h1{
-  font-size:clamp(32px,5vw,54px);
-  line-height:1.08;
-  margin:12px 0;
-  letter-spacing:-1.5px
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #888;
 }
 
-.intro p{
-  color:var(--muted);
-  line-height:1.7;
-  margin:0
+main {
+  padding: 42px 0 60px;
 }
 
-.player-card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:12px;
-  overflow:hidden;
-  box-shadow:0 25px 80px rgba(0,0,0,.25)
+.intro {
+  margin-bottom: 22px;
 }
 
-.player{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  background:#000;
-  border-radius:11px;
-  overflow:hidden
+.eyebrow {
+  color: #58aaff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-#youtubePlayer{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:1
+h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.1;
+  margin: 10px 0;
+  letter-spacing: -1.3px;
 }
 
-#youtubePlayer iframe{
-  width:100%;
-  height:100%;
-  border:0
+.intro p {
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+  font-size: 14px;
 }
 
-/* Tela colorida de ausência de sinal */
-.no-signal{
-  position:absolute;
-  inset:0;
-  z-index:3;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:#000;
-  text-align:center
+.player-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0,0,0,.25);
 }
 
-.no-signal.hidden{display:none}
-
-.color-bars{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  width:100%;
-  height:68%
+.player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.color-bars span:nth-child(1){background:#fff}
-.color-bars span:nth-child(2){background:#ffff00}
-.color-bars span:nth-child(3){background:#00ffff}
-.color-bars span:nth-child(4){background:#00ff00}
-.color-bars span:nth-child(5){background:#ff00ff}
-.color-bars span:nth-child(6){background:#ff0000}
-.color-bars span:nth-child(7){background:#0000ff}
-
-.signal-middle{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  width:100%;
-  height:12%
+#youtubePlayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-.signal-middle span:nth-child(odd){background:#111}
-.signal-middle span:nth-child(even){background:#ddd}
-
-.signal-bottom{
-  display:flex;
-  width:100%;
-  height:20%
+#youtubePlayer iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-.signal-bottom span{flex:1}
-.signal-bottom span:nth-child(1){background:#0000ff}
-.signal-bottom span:nth-child(2){background:#000}
-.signal-bottom span:nth-child(3){background:#ff00ff}
-.signal-bottom span:nth-child(4){background:#000}
-.signal-bottom span:nth-child(5){background:#fff}
-.signal-bottom span:nth-child(6){background:#000}
-.signal-bottom span:nth-child(7){background:#222}
-
-.signal-caption{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:10%;
-  padding:10px;
-  color:#fff;
-  text-shadow:0 2px 8px #000;
-  font-weight:900;
-  letter-spacing:3px;
-  font-size:clamp(12px,2vw,20px)
+/* Barras de cor quando não houver sinal */
+.no-signal {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.player-info{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  padding:18px 8px 8px;
-  flex-wrap:wrap
+.no-signal.hidden {
+  display: none;
 }
 
-.player-info h2{
-  margin:0 0 5px;
-  font-size:18px
+.color-bars {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  height: 68%;
 }
 
-.player-info p{
-  color:var(--muted);
-  font-size:13px;
-  margin:0
+.color-bars span:nth-child(1) { background: #fff; }
+.color-bars span:nth-child(2) { background: #ffff00; }
+.color-bars span:nth-child(3) { background: #00ffff; }
+.color-bars span:nth-child(4) { background: #00ff00; }
+.color-bars span:nth-child(5) { background: #ff00ff; }
+.color-bars span:nth-child(6) { background: #ff0000; }
+.color-bars span:nth-child(7) { background: #0000ff; }
+
+.signal-middle {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  height: 12%;
 }
 
-.button{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  background:var(--blue);
-  color:#fff;
-  text-decoration:none;
-  border-radius:9px;
-  padding:12px 17px;
-  font-weight:750;
-  font-size:13px
+.signal-middle span:nth-child(odd) { background: #111; }
+.signal-middle span:nth-child(even) { background: #ddd; }
+
+.signal-bottom {
+  display: flex;
+  width: 100%;
+  height: 20%;
 }
 
-.button:hover{background:#0874dc}
+.signal-bottom span { flex: 1; }
+.signal-bottom span:nth-child(1) { background: #0000ff; }
+.signal-bottom span:nth-child(2) { background: #000; }
+.signal-bottom span:nth-child(3) { background: #ff00ff; }
+.signal-bottom span:nth-child(4) { background: #000; }
+.signal-bottom span:nth-child(5) { background: #fff; }
+.signal-bottom span:nth-child(6) { background: #000; }
+.signal-bottom span:nth-child(7) { background: #222; }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:16px;
-  margin-top:22px
+.signal-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+  padding: 10px;
+  color: #fff;
+  text-shadow: 0 2px 8px #000;
+  font-weight: 900;
+  letter-spacing: 3px;
+  font-size: clamp(12px, 2vw, 20px);
 }
 
-.info-card{
-  padding:22px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:14px
+.player-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 7px 5px;
+  gap: 10px;
 }
 
-.info-card h3{
-  font-size:15px;
-  margin:0 0 9px
+.player-info h2 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.info-card p{
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.7;
-  margin:0
+.player-info p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 5px 0 0;
 }
 
-footer{
-  border-top:1px solid var(--border);
-  padding:25px 0;
-  color:#8091a7;
-  font-size:12px;
-  text-align:center
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
 }
 
-@media(max-width:600px){
-  main{padding-top:32px}
-  .cards{grid-template-columns:1fr}
-  .player-card{padding:7px}
-  .player-info{padding:14px 6px 7px}
-  .button{width:100%}
+.info-card {
+  padding: 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.info-card h3 {
+  font-size: 14px;
+  margin: 0 0 9px;
+}
+
+.info-card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 23px 0;
+  color: #8091a7;
+  font-size: 12px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding-top: 30px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .player-card {
+    padding: 6px;
+  }
+
+  .player-info {
+    padding: 12px 5px 5px;
+  }
 }
 </style>
 </head>
@@ -297,7 +303,6 @@ footer{
   <section class="player-card">
     <div class="player">
 
-      <!-- As barras começam escondidas para não cobrir o vídeo -->
       <div id="noSignal" class="no-signal hidden">
         <div class="color-bars">
           <span></span><span></span><span></span><span></span>
@@ -322,30 +327,22 @@ footer{
 
     <div class="player-info">
       <div>
-        <h2>HS Network — Ao Vivo</h2>
+        <h2>HS Network</h2>
         <p id="streamStatus">Carregando o player da transmissão...</p>
       </div>
-
-      <a class="button"
-         href="https://youtube.com/live/SkTjD8g0bAI"
-         target="_blank"
-         rel="noopener noreferrer">
-        Assistir transmissão
-      </a>
     </div>
   </section>
 
   <section class="cards">
     <article class="info-card">
-      <h3>📡 Nossa transmissão</h3>
+      <h3>📡 Transmissão</h3>
       <p>
-        Acompanhe a programação da HS Network e nossas transmissões
-        pela internet.
+        Acompanhe nossa programação e transmissões pela internet.
       </p>
     </article>
 
     <article class="info-card">
-      <h3>🎬 Produção audiovisual</h3>
+      <h3>🎬 HS Network</h3>
       <p>
         Tecnologia, imagem e transmissão ao vivo em um só lugar.
       </p>
@@ -358,10 +355,10 @@ footer{
 </footer>
 
 <script>
-document.getElementById("year").textContent =
-  new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 
 const LIVE_ID = "SkTjD8g0bAI";
+
 const overlay = document.getElementById("noSignal");
 const statusText = document.getElementById("streamStatus");
 const labelText = document.getElementById("liveLabelText");
@@ -378,17 +375,34 @@ function showNoSignal(message) {
   overlay.classList.remove("hidden");
   setStatus(
     "SEM SINAL",
-    message || "A transmissão terminou ou não está disponível.",
+    message || "A transmissão não está disponível.",
     "#888"
+  );
 }
 
-/* O player fica visível durante o carregamento. */
+function hideNoSignal() {
+  overlay.classList.add("hidden");
+  setStatus(
+    "AO VIVO",
+    "Reprodução da transmissão.",
+    "#ff4141"
+  );
+  dot.style.boxShadow = "0 0 12px #ff4141";
+}
+
+/* Mantém as barras escondidas enquanto o player carrega. */
 overlay.classList.add("hidden");
-setStatus("CONECTANDO", "Carregando o player da transmissão...", "#168bff");
+
+setStatus(
+  "CONECTANDO",
+  "Carregando a transmissão...",
+  "#168bff"
+);
 
 window.onYouTubeIframeAPIReady = function() {
   new YT.Player("youtubePlayer", {
     videoId: LIVE_ID,
+
     playerVars: {
       autoplay: 0,
       controls: 1,
@@ -397,11 +411,12 @@ window.onYouTubeIframeAPIReady = function() {
       enablejsapi: 1,
       origin: window.location.origin
     },
+
     events: {
       onReady: function() {
         setStatus(
           "PRONTO",
-          "Player carregado. Aguarde ou inicie a reprodução.",
+          "Player carregado.",
           "#168bff"
         );
       },
@@ -409,17 +424,22 @@ window.onYouTubeIframeAPIReady = function() {
       onStateChange: function(event) {
         if (event.data === YT.PlayerState.PLAYING) {
           hideNoSignal();
+
         } else if (event.data === YT.PlayerState.ENDED) {
           showNoSignal("A transmissão terminou.");
+
         } else if (event.data === YT.PlayerState.BUFFERING) {
           overlay.classList.add("hidden");
+
           setStatus(
             "CONECTANDO",
             "Conectando à transmissão...",
             "#168bff"
           );
+
         } else if (event.data === YT.PlayerState.PAUSED) {
           overlay.classList.add("hidden");
+
           setStatus(
             "PAUSADO",
             "A reprodução está pausada.",
@@ -429,7 +449,9 @@ window.onYouTubeIframeAPIReady = function() {
       },
 
       onError: function() {
-        showNoSignal("Não foi possível reproduzir esta transmissão.");
+        showNoSignal(
+          "Não foi possível reproduzir esta transmissão."
+        );
       }
     }
   });
@@ -441,4 +463,4 @@ document.head.appendChild(api);
 </script>
 </body>
 </html>
-
+```
