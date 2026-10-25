@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050914">
+  <meta name="description" content="HS Network — Web TV independente. Ideias ao vivo. Conexões reais.">
+  <title>HS Network — Ideias ao vivo. Conexões reais.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050914; --panel: #0A1427; --blue: #168CFF; --cyan: #55C2FF;
+      --white: #F4F8FF; --muted: #A6B4CC; --red: #FF3B55;
+      --line: rgba(145, 177, 224, .15); --radius: 22px; --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body { margin: 0; background: var(--bg); color: var(--white); font-family: Inter, system-ui, -apple-system, sans-serif; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--line); background: rgba(5,9,20,.84); backdrop-filter: blur(18px); }
+    .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; flex-shrink: 0; }
+    .brand-mark { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 12px; background: linear-gradient(145deg, var(--blue), #0752B2); box-shadow: 0 0 30px rgba(22,140,255,.22); font-weight: 900; letter-spacing: -1.5px; }
+    .brand-name { font-size: 14px; line-height: 1.15; letter-spacing: 2px; font-weight: 800; }
+    .brand-name span { display: block; color: var(--cyan); font-size: 10px; letter-spacing: 3.6px; margin-top: 5px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: var(--muted); font-size: 13px; font-weight: 600; }
+    .nav-links a:hover { color: var(--white); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 47px; padding: 0 19px; border: 1px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 750; transition: transform .2s, border-color .2s, background .2s; cursor: pointer; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: white; background: linear-gradient(110deg, #168CFF, #0866D5); box-shadow: 0 9px 30px rgba(22,140,255,.18); }
+    .btn-secondary { border-color: var(--line); background: rgba(255,255,255,.025); color: var(--white); }
+    .btn-secondary:hover { border-color: rgba(85,194,255,.45); }
+    .hero { position: relative; overflow: hidden; padding: 86px 0 76px; }
+    .hero::before { content: ""; position: absolute; width: 620px; height: 620px; right: -170px; top: -200px; border-radius: 50%; background: radial-gradient(circle, rgba(22,140,255,.17), rgba(22,140,255,0) 68%); pointer-events: none; }
+    .hero-grid { display: grid; grid-template-columns: .92fr 1.08fr; align-items: center; gap: 58px; position: relative; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; color: var(--cyan); font-size: 10px; font-weight: 800; letter-spacing: 2.4px; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--cyan); }
+    h1 { margin: 20px 0 20px; max-width: 600px; font-size: clamp(42px, 5.3vw, 68px); line-height: 1.05; letter-spacing: -3.8px; font-weight: 800; }
+    h1 span { color: var(--cyan); }
+    .hero-copy { max-width: 490px; color: var(--muted); font-size: 15px; line-height: 1.85; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .hero-note { margin-top: 22px; color: #7F90AB; font-size: 11px; letter-spacing: .15px; }
+    .player-shell { position: relative; padding: 1px; border-radius: 22px; background: linear-gradient(140deg, rgba(85,194,255,.65), rgba(22,140,255,.12) 40%, rgba(255,255,255,.08)); box-shadow: 0 24px 90px rgba(0,0,0,.35), 0 0 65px rgba(22,140,255,.08); }
+    .player { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 16 / 9; border-radius: 21px; background: #030712; }
+    .player video { display: none; width: 100%; height: 100%; object-fit: contain; background: #030712; }
+    .player.is-playing video { display: block; }
+    .player-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; background: radial-gradient(ellipse at 50% 45%, rgba(10,67,133,.28), transparent 58%), linear-gradient(145deg, rgba(8,18,39,.35), rgba(3,7,18,.92)); }
+    .player.is-playing .player-overlay { display: none; }
+    .signal-art { position: relative; display: grid; place-items: center; width: 72px; height: 72px; margin-bottom: 20px; border: 1px solid rgba(85,194,255,.28); border-radius: 22px; background: rgba(22,140,255,.08); }
+    .signal-art::before, .signal-art::after { content: ""; position: absolute; border: 1px solid rgba(85,194,255,.17); border-radius: 28px; inset: -10px; }
+    .signal-art::after { inset: -20px; border-color: rgba(85,194,255,.09); }
+    .signal-art svg { width: 28px; height: 28px; color: var(--cyan); }
+    .status { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 1.8px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #7C879A; }
+    .status.live { color: #FF8191; }
+    .status.live .status-dot { background: var(--red); box-shadow: 0 0 12px rgba(255,59,85,.8); }
+    .player-title { margin: 0; font-size: clamp(18px, 2.2vw, 25px); letter-spacing: -.7px; }
+    .player-description { max-width: 340px; margin: 8px 0 19px; color: var(--muted); font-size: 12px; }
+    .player-message { margin-top: 12px; color: #71819B; font-size: 10px; }
+    .player-topline { position: absolute; z-index: 2; top: 15px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; pointer-events: none; }
+    .mini-brand { font-size: 10px; letter-spacing: 1.5px; font-weight: 800; text-shadow: 0 2px 10px #000; }
+    .onair { display: inline-flex; align-items: center; gap: 7px; padding: 6px 9px; border-radius: 7px; background: rgba(4,8,18,.8); color: #8998B0; font-size: 9px; font-weight: 800; letter-spacing: 1.3px; }
+    .onair .status-dot { width: 6px; height: 6px; }
+    .player.is-playing .onair { color: #FF8191; }
+    .player.is-playing .onair .status-dot { background: var(--red); }
+    .section { padding: 82px 0; }
+    .section.alt { background: linear-gradient(180deg, rgba(10,20,39,.4), rgba(10,20,39,.18)); border-block: 1px solid rgba(145,177,224,.07); }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 32px; }
+    .section-kicker { color: var(--cyan); font-size: 10px; font-weight: 800; letter-spacing: 2.2px; text-transform: uppercase; }
+    h2 { margin: 9px 0 0; font-size: clamp(28px, 3.6vw, 42px); line-height: 1.15; letter-spacing: -1.8px; }
+    .section-intro { max-width: 475px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 17px; }
+    .program-card { position: relative; min-height: 232px; padding: 25px; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(145deg, rgba(10,20,39,.95), rgba(7,14,29,.8)); transition: transform .2s, border-color .2s; }
+    .program-card:hover { transform: translateY(-4px); border-color: rgba(85,194,255,.32); }
+    .program-card::after { content: ""; position: absolute; width: 150px; height: 150px; right: -80px; bottom: -90px; border-radius: 50%; background: rgba(22,140,255,.13); filter: blur(10px); }
+    .program-icon { display: grid; place-items: center; width: 43px; height: 43px; margin-bottom: 25px; border: 1px solid rgba(85,194,255,.2); border-radius: 13px; background: rgba(22,140,255,.08); color: var(--cyan); }
+    .program-icon svg { width: 20px; height: 20px; }
+    .program-card h3 { margin: 0 0 9px; font-size: 17px; letter-spacing: -.4px; }
+    .program-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .about-grid { display: grid; grid-template-columns: .95fr 1.05fr; gap: 70px; align-items: start; }
+    .about-copy { color: var(--muted); font-size: 14px; line-height: 1.95; }
+    .values { display: grid; gap: 13px; }
+    .value { display: flex; gap: 15px; align-items: center; padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: rgba(10,20,39,.6); }
+    .value-number { display: grid; place-items: center; width: 37px; height: 37px; flex: 0 0 37px; border-radius: 11px; background: rgba(22,140,255,.12); color: var(--cyan); font-size: 11px; font-weight: 800; }
+    .value strong { display: block; font-size: 13px; }
+    .value small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; }
+    .schedule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 30px; }
+    .schedule-item { padding: 22px; border: 1px solid var(--line); border-radius: 17px; background: rgba(10,20,39,.58); }
+    .schedule-label { display: inline-block; padding: 5px 8px; border: 1px solid rgba(85,194,255,.17); border-radius: 6px; color: var(--cyan); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+    .schedule-item h3 { margin: 15px 0 5px; font-size: 15px; }
+    .schedule-item p { margin: 0; color: var(--muted); font-size: 12px; }
+    .cta { position: relative; overflow: hidden; padding: 52px; border: 1px solid rgba(85,194,255,.22); border-radius: 25px; background: radial-gradient(ellipse at 100% 0%, rgba(22,140,255,.2), transparent 48%), linear-gradient(120deg, #0A1427, #071021); }
+    .cta h2 { max-width: 680px; }
+    .cta p { max-width: 650px; margin: 15px 0 24px; color: var(--muted); font-size: 13px; line-height: 1.9; }
+    footer { padding: 26px 0; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: #7F90AB; font-size: 10px; }
+    .footer-brand { color: var(--muted); font-weight: 800; letter-spacing: 1.2px; }
+    .footer-inner p { margin: 0; }
+    .notice { display: none; margin-top: 12px; padding: 11px 13px; border: 1px solid rgba(255,59,85,.25); border-radius: 10px; color: #FF9AA7; background: rgba(255,59,85,.06); font-size: 11px; }
+    .notice.show { display: block; }
+    @media (max-width: 900px) {
+      .nav-links { gap: 17px; } .hero-grid { grid-template-columns: 1fr; gap: 38px; }
+      .hero-copy { max-width: 620px; } .player-shell { max-width: 760px; width: 100%; }
+      .hero { padding-top: 65px; } .about-grid { gap: 35px; }
+    }
+    @media (max-width: 650px) {
+      .container { width: min(100% - 30px, var(--max)); }
+      .nav { min-height: 70px; flex-wrap: wrap; padding: 12px 0; gap: 12px; }
+      .brand-mark { width: 38px; height: 38px; } .brand-name { font-size: 12px; }
+      .nav-links { order: 3; width: 100%; justify-content: space-between; gap: 8px; padding: 8px 0 2px; font-size: 11px; }
+      .nav > .btn { min-height: 39px; padding-inline: 12px; font-size: 11px; }
+      .hero { padding: 54px 0 58px; } h1 { font-size: clamp(39px, 12vw, 54px); letter-spacing: -2.7px; }
+      .hero-copy { font-size: 13px; } .hero-actions .btn { flex: 1 1 auto; }
+      .player-overlay { padding: 15px; } .signal-art { width: 54px; height: 54px; margin-bottom: 14px; border-radius: 17px; }
+      .signal-art::before { inset: -7px; } .signal-art::after { inset: -14px; }
+      .player-description { margin: 6px 0 12px; font-size: 10px; }
+      .player-title { font-size: 17px; } .player-message { font-size: 9px; }
+      .section { padding: 61px 0; } .section-head { display: block; } .section-intro { margin-top: 13px; }
+      .program-grid, .schedule-grid, .about-grid { grid-template-columns: 1fr; }
+      .program-card { min-height: 0; } .program-icon { margin-bottom: 18px; }
+      .about-grid { gap: 25px; } .cta { padding: 29px 22px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="HS Network, início">
+        <span class="brand-mark">HS</span>
+        <span class="brand-name">HS NETWORK<span>WEB TV INDEPENDENTE</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#ao-vivo">Ao vivo</a><a href="#programas">Programas</a><a href="#sobre">Sobre</a>
+      </nav>
+      <a class="btn btn-primary" href="#ao-vivo">Assistir agora <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Sua TV na internet</div>
+          <h1>Ideias ao vivo.<br><span>Conexões reais.</span></h1>
+          <p class="hero-copy">A HS Network é uma Web TV independente para reunir conversas, histórias, criatividade e entretenimento em um só lugar. Uma tela aberta para novas ideias — ao vivo quando a programação começa.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#ao-vivo">Ir para o player <span aria-hidden="true">→</span></a>
+            <a class="btn btn-secondary" href="#programas">Conhecer os programas</a>
+          </div>
+          <p class="hero-note">Produção independente <span aria-hidden="true">•</span> Programas especiais e transmissões ocasionais</p>
+        </div>
+
+        <div class="player-shell" id="ao-vivo">
+          <div class="player" id="player">
+            <div class="player-topline">
+              <span class="mini-brand">HS NETWORK</span>
+              <span class="onair" id="onairBadge"><span class="status-dot"></span><span id="onairText">FORA DO AR</span></span>
+            </div>
+            <video id="streamVideo" controls playsinline preload="none" aria-label="Transmissão ao vivo da HS Network"></video>
+            <div class="player-overlay" id="playerOverlay">
+              <div class="signal-art" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 9a12 12 0 0 1 16 0M7 12a7.5 7.5 0 0 1 10 0M10 15a3 3 0 0 1 4 0"/><circle cx="12" cy="18" r="1" fill="currentColor" stroke="none"/>
+                </svg>
+              </div>
+              <div class="status" id="playerStatus"><span class="status-dot"></span><span>FORA DO AR</span></div>
+              <h2 class="player-title" id="playerTitle">A próxima transmissão começa aqui.</h2>
+              <p class="player-description" id="playerDescription">Volte em breve para acompanhar a HS Network. Quando houver sinal, o player ficará disponível nesta página.</p>
+              <button class="btn btn-primary" id="playButton" type="button" hidden>Assistir transmissão <span aria-hidden="true">▶</span></button>
+              <div class="player-message" id="playerMessage">Transmissões especiais • Sem programação 24 horas</div>
+              <div class="notice" id="playerNotice" role="status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="programas">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="section-kicker">Conteúdo original</div><h2>Programas para se conectar.</h2></div>
+          <p class="section-intro">Ideias em diferentes formatos, conversas sem roteiro engessado e histórias que aproximam. Conheça algumas propostas iniciais da HS Network.</p>
+        </div>
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="program-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/><path d="M16 3h5v5"/></svg></div>
+            <h3>Conexão ao Vivo</h3><p>Conversas descontraídas, convidados e assuntos que rendem boas histórias.</p>
+          </article>
+          <article class="program-card">
+            <div class="program-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18h.01"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 5"/><circle cx="12" cy="12" r="10"/></svg></div>
+            <h3>Que História É Essa?</h3><p>Relatos curiosos, experiências de vida e histórias que merecem ser contadas.</p>
+          </article>
+          <article class="program-card">
+            <div class="program-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M7 9h.01M11 9h6M7 13h10"/></svg></div>
+            <h3>Fala, Internet!</h3><p>Cultura digital, tendências, ideias e papo leve sobre o que está acontecendo.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="container about-grid">
+        <div>
+          <div class="section-kicker">Nossa proposta</div>
+          <h2>Uma ideia independente. Uma tela aberta.</h2>
+          <p class="about-copy">A HS Network nasce da vontade de criar uma experiência de televisão pela internet com identidade própria. A proposta é simples: ligar a câmera quando tiver algo legal para compartilhar, criar programas especiais e reunir o público em torno de boas conversas e conteúdo original.</p>
+        </div>
+        <div class="values">
+          <div class="value"><span class="value-number">01</span><div><strong>Criatividade e formatos autorais</strong><small>Conteúdo com personalidade e liberdade para experimentar.</small></div></div>
+          <div class="value"><span class="value-number">02</span><div><strong>Ao vivo quando houver programação</strong><small>Transmissões especiais, sem compromisso de ficar 24 horas no ar.</small></div></div>
+          <div class="value"><span class="value-number">03</span><div><strong>Uma experiência feita para a web</strong><small>Assista diretamente pelo site, no computador ou celular.</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt" id="programacao">
+      <div class="container">
+        <div class="section-kicker">Agenda aberta</div>
+        <h2>Quando tem programa, tem encontro.</h2>
+        <p class="section-intro" style="margin-top:13px">A HS Network não transmite 24 horas por dia. Os horários e eventos serão anunciados conforme cada transmissão for marcada.</p>
+        <div class="schedule-grid">
+          <article class="schedule-item"><span class="schedule-label">Eventual</span><h3>Transmissões especiais</h3><p>Ao vivo em ocasiões e eventos selecionados.</p></article>
+          <article class="schedule-item"><span class="schedule-label">Em produção</span><h3>Novos programas</h3><p>Formatos originais sendo desenvolvidos.</p></article>
+          <article class="schedule-item"><span class="schedule-label">Em planejamento</span><h3>Participações e convidados</h3><p>Novas vozes e conversas para compartilhar.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <div class="section-kicker">Fique por perto</div>
+          <h2>A próxima transmissão pode começar a qualquer momento.</h2>
+          <p>Salve o endereço da HS Network e volte quando houver um programa anunciado. O player ficará nesta página para você assistir sem sair do site.</p>
+          <a class="btn btn-primary" href="#ao-vivo">Abrir player <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-brand">HS NETWORK <span aria-hidden="true">•</span> Web TV independente</p>
+      <p>© <span id="currentYear"></span> HS Network. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!--
+    CONFIGURAÇÃO DO STREAM:
+    1. Defina window.HS_STREAM_URL abaixo com a URL HLS pública (terminando normalmente em .m3u8).
+    2. Não use localhost, 127.0.0.1, IP privado, senhas ou tokens secretos.
+    3. O estado AO VIVO é confirmado pelo carregamento do manifesto HLS; URL configurada sozinha não basta.
+  -->
+  <script>
+    // Preencha somente quando o HLS público estiver pronto. Exemplo de formato: "https://SEU-DOMINIO-PUBLICO/caminho/index.m3u8"
+    window.HS_STREAM_URL = "";
+
+    (function () {
+      "use strict";
+      const HLS_LIBRARY = "https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js";
+      const video = document.getElementById("streamVideo");
+      const player = document.getElementById("player");
+      const overlay = document.getElementById("playerOverlay");
+      const status = document.getElementById("playerStatus");
+      const onairBadge = document.getElementById("onairBadge");
+      const onairText = document.getElementById("onairText");
+      const title = document.getElementById("playerTitle");
+      const description = document.getElementById("playerDescription");
+      const playButton = document.getElementById("playButton");
+      const message = document.getElementById("playerMessage");
+      const notice = document.getElementById("playerNotice");
+      let hls = null;
+      let confirmedLive = false;
+      let recoveryTimer = null;
+      let hlsLibraryPromise = null;
+
+      document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+      function setOffline(detail) {
+        confirmedLive = false;
+        player.classList.remove("is-playing");
+        status.classList.remove("live");
+        status.innerHTML = '<span class="status-dot"></span><span>FORA DO AR</span>';
+        onairBadge.classList.remove("live");
+        onairText.textContent = "FORA DO AR";
+        title.textContent = "A próxima transmissão começa aqui.";
+        description.textContent = "Volte em breve para acompanhar a HS Network. Quando houver sinal, o player ficará disponível nesta página.";
+        playButton.hidden = true;
+        message.textContent = detail || "Transmissões especiais • Sem programação 24 horas";
+        notice.classList.remove("show");
+      }
+
+      function setLiveReady() {
+        confirmedLive = true;
+        status.classList.add("live");
+        status.innerHTML = '<span class="status-dot"></span><span>TRANSMISSÃO DISPONÍVEL</span>';
+        onairBadge.classList.add("live");
+        onairText.textContent = "AO VIVO";
+        title.textContent = "A HS Network está ao vivo.";
+        description.textContent = "O sinal está disponível. Clique abaixo para começar a assistir.";
+        playButton.hidden = false;
+        message.textContent = "Reprodução iniciada por você • Player próprio HS Network";
+        notice.classList.remove("show");
+      }
+
+      function showPlaybackError(text) {
+        notice.textContent = text;
+        notice.classList.add("show");
+      }
+
+      function loadHlsLibrary() {
+        if (window.Hls) return Promise.resolve(window.Hls);
+        if (hlsLibraryPromise) return hlsLibraryPromise;
+        hlsLibraryPromise = new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src = HLS_LIBRARY;
+          script.async = true;
+          script.onload = () => window.Hls ? resolve(window.Hls) : reject(new Error("Biblioteca HLS indisponível."));
+          script.onerror = () => reject(new Error("Não foi possível carregar a biblioteca de reprodução HLS."));
+          document.head.appendChild(script);
+        });
+        return hlsLibraryPromise;
+      }
+
+      function cleanupPlayback() {
+        if (hls) { try { hls.destroy(); } catch (_) {} hls = null; }
+        video.pause();
+        video.removeAttribute("src");
+        video.load();
+        player.classList.remove("is-playing");
+      }
+
+      async function startPlayback() {
+        if (!confirmedLive) return;
+        playButton.disabled = true;
+        playButton.textContent = "Conectando…";
+        try {
+          await video.play();
+          player.classList.add("is-playing");
+          overlay.style.display = "none";
+        } catch (error) {
+          showPlaybackError("Não foi possível iniciar a reprodução. Confira o volume e tente novamente.");
+        } finally {
+          playButton.disabled = false;
+          playButton.innerHTML = 'Assistir transmissão <span aria-hidden="true">▶</span>';
+        }
+      }
+
+      function showOverlayAgain() {
+        overlay.style.display = "";
+        player.classList.remove("is-playing");
+      }
+
+      async function checkStream() {
+        const url = (window.HS_STREAM_URL || "").trim();
+        if (!url) {
+          cleanupPlayback();
+          setOffline("A transmissão pública ainda está sendo configurada.");
+          return;
+        }
+        if (!/^https:\/\/[^/]+/i.test(url)) {
+          cleanupPlayback();
+          setOffline("Configure uma URL HLS pública HTTPS para ativar a transmissão.");
+          return;
+        }
+        if (recoveryTimer) clearTimeout(recoveryTimer);
+        cleanupPlayback();
+        setOffline("Verificando disponibilidade do sinal…");
+
+        // HLS nativo: carregar o manifesto com preload e confirmar apenas após evento real de mídia.
+        if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = url;
+          video.addEventListener("loadedmetadata", onNativeReady, { once: true });
+          video.addEventListener("error", onNativeError, { once: true });
+          video.load();
+          recoveryTimer = setTimeout(() => {
+            if (!confirmedLive) onNativeError();
+          }, 10000);
+          return;
+        }
+
+        try {
+          const Hls = await loadHlsLibrary();
+          if (!Hls.isSupported()) {
+            setOffline("Este navegador não oferece suporte a HLS. Tente Safari, Chrome ou outro navegador atualizado.");
+            return;
+          }
+          hls = new Hls({ enableWorker: true, lowLatencyMode: false, backBufferLength: 30 });
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            if (recoveryTimer) clearTimeout(recoveryTimer);
+            setLiveReady();
+          });
+          hls.on(Hls.Events.ERROR, (_event, data) => {
+            if (data && data.fatal) {
+              cleanupPlayback();
+              setOffline("Não foi possível receber o sinal. A transmissão pode ter terminado ou o servidor estar indisponível.");
+              scheduleRetry();
+            }
+          });
+          hls.loadSource(url);
+          hls.attachMedia(video);
+          recoveryTimer = setTimeout(() => {
+            if (!confirmedLive) {
+              cleanupPlayback();
+              setOffline("Nenhum sinal foi confirmado. Verifique se o OBS está transmitindo e tente novamente em instantes.");
+              scheduleRetry();
+            }
+          }, 12000);
+        } catch (_) {
+          setOffline("A biblioteca HLS não foi carregada. Confira sua conexão e tente novamente.");
+          showPlaybackError("Se o navegador não oferecer HLS nativo, a biblioteca hls.js precisa estar acessível.");
+        }
+      }
+
+      function onNativeReady() {
+        if (recoveryTimer) clearTimeout(recoveryTimer);
+        setLiveReady();
+      }
+
+      function onNativeError() {
+        if (recoveryTimer) clearTimeout(recoveryTimer);
+        cleanupPlayback();
+        setOffline("Nenhum sinal foi confirmado. A transmissão pode estar fora do ar.");
+        scheduleRetry();
+      }
+
+      function scheduleRetry() {
+        if (recoveryTimer) clearTimeout(recoveryTimer);
+        recoveryTimer = setTimeout(checkStream, 15000);
+      }
+
+      playButton.addEventListener("click", startPlayback);
+      video.addEventListener("playing", () => {
+        if (confirmedLive) {
+          player.classList.add("is-playing");
+          overlay.style.display = "none";
+        }
+      });
+      video.addEventListener("error", () => {
+        if (confirmedLive) {
+          cleanupPlayback();
+          setOffline("O sinal foi interrompido. A HS Network está verificando a transmissão.");
+          scheduleRetry();
+        }
+      });
+      video.addEventListener("pause", () => {
+        if (confirmedLive) showOverlayAgain();
+      });
+
+      checkStream();
+    })();
+  </script>
+</body>
+</html>
